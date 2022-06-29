@@ -11,6 +11,7 @@
     "@types/react-router-dom": "^5.3.3",
     "antd": "^4.21.3",
     "axios": "^0.27.2",
+    "chart.js": "^3.8.0",
     "chartjs": "^0.3.24",
     "html-react-parser": "^2.0.0",
     "millify": "^4.0.0",

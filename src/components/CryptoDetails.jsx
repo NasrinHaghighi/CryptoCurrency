@@ -15,11 +15,13 @@ const { Option } = Select;
 
 function CryptoDetails() {
   const {coinId}= useParams()
-  const [timePeriod, setTimeperiod] = useState('7d');
+  const [timeperiod, setTimeperiod] = useState('7d');
   const { data, isFetching } = useGetCryptoDetailsQuery(coinId);
-  const {data: cryptoHistory} = useGetCryptoHistoryQuery(coinId, timePeriod)
-  console.log(cryptoHistory)
-  console.log(data)
+  const {data: coinHistory } = useGetCryptoHistoryQuery(coinId, timeperiod)
+ // console.log(coinHistory)
+
+  //console.log(data)
+ // console.log(timePeriod)
  
  
   //console.log(coinId)
@@ -53,11 +55,14 @@ function CryptoDetails() {
       </Title>
       <p>{cryptoDetails.name} live price in US Dollar (USD). View value statistics, market cap and supply.</p>
     </Col>
+
+    
     <Select defaultValue="7d"  onChange={(value)=>setTimeperiod(value)} placeholder='select period of day' className="select-timeperiod">
-{time.map((item, index)=>{
-  return <Option key={index} > {item}</Option>
+{time.map((data, index)=>{
+  return <Option key={index} value={data} > {data}</Option>
 })}
     </Select>
+     <LineChart coinHistory={coinHistory} currentPrice={millify(cryptoDetails?.price)} coinName={cryptoDetails?.name} /> 
     <Col className="stats-container">
         <Col className="coin-value-statistics">
           <Col className="coin-value-statistics-heading">
@@ -95,15 +100,7 @@ function CryptoDetails() {
           <Title level={3} className="coin-details-heading">What is {cryptoDetails.name}?</Title>
           {HTMLReactParser(cryptoDetails.description)}
         </Row>
-        <Col className="coin-links">
-          <Title level={3} className="coin-details-heading">{cryptoDetails.name} Links</Title>
-          {cryptoDetails.links?.map((link) => (
-            <Row className="coin-link" key={link.name}>
-              <Title level={5} className="link-name">{link.type}</Title>
-              <a href={link.url} target="_blank" rel="noreferrer">{link.name}</a>
-            </Row>
-          ))}
-        </Col>
+      
       </Col>
     </Col>
   );
